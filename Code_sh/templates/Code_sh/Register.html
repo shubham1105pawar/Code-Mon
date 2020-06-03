@@ -1,0 +1,96 @@
+
+{% extends "Code_sh/Base.html" %}
+
+ 
+ {% block content %}
+ {% load static %}
+
+<div class="row justify-content-center mt-5 ">
+          <div class="col-md-4">
+            <span class="anchor" id="formUserEdit"></span>
+<div class="card card-outline-secondary">
+              <div class="card-header">
+                <div class="col-md-4">
+                <h3 class="mb-0">Sign-Up</h3>
+                <img class="center" src="{% static 'Code_sh/logo1.png' %}">
+              </div>
+              </div>
+              <div class="card-body">
+                {% if msg %}
+                <p style="text-align:center">{{msg}}</p>
+                {%endif%}
+                <form role="form" method="post" action="Register_user">
+                     {% csrf_token %}
+                  <div class="form-group row">
+                     
+                    <div class="col-lg-6">
+                      <input class="form-control" type="text" placeholder="Your Name" name="first_name" required="required">
+                    </div>
+                    
+                    <div class="col-lg-6">
+                      <input class="form-control" type="text" placeholder="Your Last name" name="last_name" required="required">
+                    </div>
+                  </div>
+                 
+                    
+                 
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                    <div class="col-lg-9">
+                      <input class="form-control" type="email" name="email" required="required">
+                    </div>
+                  </div>
+                  
+                
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                    <div class="col-lg-9">
+                      <input class="form-control" type="text" name="username" required="required">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                    <div class="col-lg-9">
+                      <input class="form-control" type="password" placeholder="Your_password" name="password" required="required"> 
+												
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
+                    <div class="col-lg-9">
+                      <input class="form-control" type="password" placeholder="Re-type" name="confirm_password" required="required">
+                    </div>
+                  </div>
+                  <div class="ml-5">
+                  	 
+                   Already have an account login?  <a class="navbar-brand" href="{% url 'login' %}"><input class="btn btn-primary btn-sm" type="button" value="Login"></a>
+                    
+                  </div>
+
+                  <div class="form-group row mt-3">
+                    
+                    <div class="col-3">
+                     
+                    </div>
+                    
+                   
+                    <div class="col-3">
+                      <input class="btn btn-secondary" type="reset" value="Cancel">
+                    </div>
+                     <div class="col-3">
+                      <button type="submit" class="btn btn-success btn-block" >SignUp</button>
+                    </div>
+                    <div class="col-3">
+                     
+                    </div>
+
+                  </div>
+
+                 </form>
+                  </div>
+              </div>
+            </div><!-- /form user info -->
+          </div>
+       
+
+{% endblock content %}

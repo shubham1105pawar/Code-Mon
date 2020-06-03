@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% extends "Code_sh/Base.html" %}
+
+{% block content %}
+ {% load static %}
+
+<div class="row justify-content-center mt-4 ">
+          <div class="col-md-7">
+            <span class="anchor" id="formUserEdit"></span>
+<div class="card card-outline-secondary">
+              <div class="card-header">
+                <div class="col-md-4">
+                <h3 class="mb-0">Cotribute Question</h3>
+                <img class="center" src="{% static 'Code_sh/logo1.png' %}">
+              </div>
+              </div>
+              <div class="card-body">
+                {% if msg %}
+                <p style="text-align:center">{{msg}}</p>
+                {%endif%}
+                <form role="form" method="post" action="ReviewContribution">
+                     {% csrf_token %}
+                  
+					  <div class="form-row">
+					  	<div class="form-group col-md-2">
+					     
+					    </div>
+					    <div class="form-group col-md-4">
+					      
+					      <select id="inputState" class="form-control" name="language">
+					      	
+					        <option value="python3" selected>Python3</option>
+					        <option value="c">C</option>
+					        <option value="Cpp">C++</option>
+					        <option value="Java">Java</option>
+					      </select>
+					    </div>
+					    <div class="form-group col-md-2">
+					     
+					    </div>
+					    <div class="form-group col-md-4">
+					     
+					      <select id="inputState" class="form-control" name="number">
+					      	<option selected  disabled="true">SelectNumbers</option>
+					        <option >10</option>
+					        <option>20</option>
+					        <option>30</option>
+					      </select>
+					    </div>
+					    
+					  </div>
+					                 
+                    <br>
+                     <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Name</label>
+                    <div class="col-lg-7">
+                      <input class="form-control" type="text" name="name" placeholder="Name of this new born</>" required="required">
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Tags</label>
+                    <div class="col-lg-7">
+                      <input class="form-control" type="text" name="tag" placeholder="Please add space between tags" required="required">
+                    </div>
+                  </div>
+                 
+                
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Description</label>
+                    <div class="col-lg-9">
+                     <textarea id="Description" name="Description" rows="3" cols="62" placeholder="Write About Question" required="required"></textarea>
+                    </div>
+                  </div>
+                
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Code</label>
+                    <div class="col-lg-9">
+                     <textarea id="w3review" name="code" rows="6" cols="62" placeholder="Write Your Code here" required="required"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Input</label>
+                    <div class="col-lg-9">
+                     <textarea id="w3review" name="input" rows="3" cols="62" placeholder="Input please"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Output</label>
+                    <div class="col-lg-9">
+                     <textarea id="w3review" name="output" rows="3" cols="62" placeholder="Expected Output" style="color:red;">{{msg1}}</textarea>
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="form-group row mt-3">
+                    
+                    <div class="col-3">
+                     
+                    </div>
+                    
+                   
+                    <div class="col-3">
+                      <input class="btn btn-secondary" type="reset" value="Cancel">
+                    </div>
+                     <div class="col-3">
+                      <button type="submit" class="btn btn-success btn-block" >Submit</button>
+                    </div>
+                    <div class="col-3">
+                     
+                    </div>
+
+                  </div>
+
+                 </form>
+                  </div>
+              </div>
+            </div><!-- /form user info -->
+          </div>
+ {% endblock content%}

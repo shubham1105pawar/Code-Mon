@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% extends "Code_sh/Base.html" %}
+
+{% block content %}
+ {% load static %}
+
+ <div class="container-fluid">
+ 
+  <div class="row">
+    <div class="col-sm-3 bg-white" style="padding-bottom: 100px">
+
+        <img src="{% static 'Code_sh/human.png' %}" width="200" height="200"  class="rounded mx-auto d-block mt-5" >
+        <h3 align="center" class="mt-2"> {{User}} </h3>
+        
+     
+
+       <div class="card" style="width: 24rem;">
+  <div class="card-header bg-primary" >
+    Your Progress
+  </div>
+  <ul class="list-group list-group-flush">
+  	
+    <li class="list-group-item " >Total Marks<h5 style="font-size:15px" align="right" >{{Total}}</h5></li>
+    <li class="list-group-item">Problem Solved<h5 style="font-size:15px" align="right" >{{Que}}</h5></li>
+    <li class="list-group-item">Problem Contributed<h5 style="font-size:15px" align="right">{{Contribute}}</h5></li>
+  </ul>
+</div>
+       </div>
+       
+      
+       
+    <div class="col-sm-9  bg-white" >
+     <table class="table table-sm">
+      <thead class="bg-secondary text-white">
+      	<tr > 
+      		<td>Problem</td>
+      		 <td>Level</td>
+      		 <td>SolveBy</td>
+      		  <td>Language</td>
+
+      	</tr>
+      </thead>
+      <tbody>
+      {% for Question in Questions %}
+      {% with '/Problems/'|add:Question.Problem_Name as result %}
+      
+      	<tr style="cursor: pointer; border-radius: 20px; border-color: red;" onclick="location.href= '{{result}}'" id="trr" >
+       <td style=" font-size: 16px;">{{Question.Problem_Name}} <br> <span style="font-style: oblique; font-size: 10px;"> auth : {{Question.Problem_Setter}}</span></td>
+       <td style=" font-size: 16px;">{{Question.Problem_level}} </td>
+       <td style=" font-size: 16px;"> {{Question.Total_Accepted}}</td>
+       <td style="font-size: 16px;">{{Question.Language}} </td>
+      </tr> 
+      
+      {% endwith %} 
+      {%endfor%}
+       </tbody>
+      </table>
+      
+      {% if Questions.has_previous %}
+        <a class="btn btn-outline-dark mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-dark mb-4" href="?page={{ Questions.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in Questions.paginator.page_range %}
+        {% if Questions.number == num %}
+          <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > Questions.number|add:'-3' and num < Questions.number|add:'3' %}
+          <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if Questions.has_next %}
+        <a class="btn btn-outline-dark mb-4" href="?page={{ Questions.next_page_number }}">Next</a>
+        <a class="btn btn-outline-dark mb-4" href="?page={{ Questions.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    
+     </div>
+  </div>
+</div>
+                 
+
+ 
+ {% endblock content%}

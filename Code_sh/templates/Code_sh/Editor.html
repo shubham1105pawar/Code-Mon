@@ -1,0 +1,213 @@
+{% extends "Code_sh/Base.html" %}
+
+ {% block content %}
+ {% load static %}
+
+<div class="container-fluid bg-white">
+ <br>
+ <div class="col-12" >
+  	<p >
+  		<button class="btn btn-primary " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="ChangeBtn()" id="btn1">MinimiseQuestion</button>
+  		{% if Msg %}
+  		{% if Msg == 'Accepted !!!!' %}
+         <h3 style="text-align:center;color: green;">Accepted !!!!</h3>
+         {% else %}
+         <h3 style="text-align:center;color: red;">{{Msg}}</h3>
+  		{% endif %}
+        {% endif %}
+  <button class="btn btn-primary " type="button" aria-expanded="false" aria-controls="collapseExample" id="myBtn" onclick="topFunction()" >
+    SeeQuestion
+  </button>
+</p>
+<div class="collapse show" id="collapseExample">
+  <div class="card card-body">
+    <h1 id="fix">{{Questions.Problem_Name}}</h1>
+     <h5>{{Questions.Problem_Description}}</h5>
+     <span>{{Questions.Problem_level}}</span>
+    
+  </div>
+</div>
+  </div>
+  <div class="row">
+  	 <div class="col-sm-1" ></div>
+    <div class="col-sm-5" >
+    	<div class="container " id="ans"  style="background-color:lightgrey;padding-bottom: 300px">
+    Drag and drop here
+     
+
+    </div>
+     
+    </div>
+       
+    <div class="col-sm-5" >
+    	<div class="container" id="que" style="background-color:lightgrey;">
+    {% for line in code %}
+    {% if line %}
+    <p class="draggable rounded" draggable="true" ondrag="fun()">{{line}}</p>
+    {% endif %}
+    {% endfor %}
+
+     
+
+    </div>
+    <form role="form" method="post" action="user_Request">
+                     {% csrf_token %}
+                     <input type="text" name="Input" id="inp" value="" hidden>
+                     <input type="text" name="problem" id="inpt" value="" hidden>
+                     <button type="submit" class="btn btn-info mt-5" id="btn2" onclick="ans()">Submit</button>
+                 </form>
+    </div>
+    <div class="col-sm-1" ></div>
+</div>
+</div>
+
+<style type="text/css">
+    .container {
+   
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  /*background-color: red; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+.draggable {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  cursor: move;
+}
+
+.draggable.dragging {
+  opacity: .5;
+}
+
+    @import url('https://fonts.googleapis.com/css?family=Raleway');
+
+* {
+    font-family: Raleway;
+}
+  </style>
+  <script type="text/javascript">
+
+  function ChangeBtn()
+  {
+  	var x = document.getElementById('btn1').innerHTML;
+
+  	if(x=="MinimiseQuestion")
+  		document.getElementById('btn1').innerHTML = "SeeQuestion";
+  	else
+  		document.getElementById('btn1').innerHTML = "MinimiseQuestion";
+
+  }
+  
+document.getElementById("btn2").style.display="none";
+
+  	function fun()
+  {
+  	
+  	  var x = document.getElementById("que").getElementsByTagName("p");
+      
+     
+      if(x.length==0)
+  		{
+  			document.getElementById("btn2").style.display="block";
+
+            document.getElementById("que").remove();
+            
+            document.getElementById("inpt").value=document.getElementById("fix").innerHTML;
+         }
+  	else
+  		{
+  			document.getElementById("btn2").style.display="none";
+  			
+          
+        }
+      
+   
+  }
+  function ans()
+  {
+  	var z = document.getElementById("ans").getElementsByTagName("p");
+  	y=''
+  	if(z != null){
+  	    for(i=0;i<z.length;i++)
+  	    {
+  	    	y += z[i].innerHTML;
+  	    	y +="$/$";
+  	    }
+  	}
+  	document.getElementById("inp").value=y;
+     
+  }
+const draggables = document.querySelectorAll('.draggable')
+const containers = document.querySelectorAll('.container')
+
+draggables.forEach(draggable => {
+  draggable.addEventListener('dragstart', () => {
+    draggable.classList.add('dragging')
+  })
+
+  draggable.addEventListener('dragend', () => {
+    draggable.classList.remove('dragging')
+  })
+})
+
+containers.forEach(container => {
+  container.addEventListener('dragover', e => {
+    e.preventDefault()
+    const afterElement = getDragAfterElement(container, e.clientY)
+    const draggable = document.querySelector('.dragging')
+    if (afterElement == null) {
+      container.appendChild(draggable)
+    } else {
+      container.insertBefore(draggable, afterElement)
+    }
+  })
+})
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect()
+    const offset = y - box.top - box.height / 2
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child }
+    } else {
+      return closest
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element
+}
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+  </script>>
+ {% endblock content %}
